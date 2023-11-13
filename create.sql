@@ -40,7 +40,7 @@ CREATE TABLE avis
     auteur INTEGER REFERENCES etudiant(id_etudiant),
     destinataire INTEGER REFERENCES etudiant(id_etudiant),
     note                            INTEGER                        ,
-
+    commentaire                     VARCHAR(20)                     ,
     CONSTRAINT pk_avis PRIMARY KEY (auteur,destinataire,id_trajet)
 );
 
@@ -91,13 +91,12 @@ CREATE TABLE etape
 CREATE TABLE trajet
 (
     id_trajet                       SERIAL                 NOT NULL,
-    date                            DATE                           ,
-    heure_depart                    INTEGER                NOT NULL,
+    instant_depart                  TIMESTAMP                      ,
     frais_par_passager              INTEGER                NOT NULL,
     conducteur INTEGER REFERENCES etudiant(id_etudiant),
     id_voiture                      INTEGER                NOT NULL,
     
-    CONSTRAINT pk_trajet PRIMARY KEY (numero_trajet)
+    CONSTRAINT pk_trajet PRIMARY KEY (id_trajet)
 );
 
 -- ============================================================
