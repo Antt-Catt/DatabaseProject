@@ -4,19 +4,22 @@
 --   Date de creation :  12/11/2023                       
 -- ============================================================
 
-DROP TABLE etudiant;
 
-DROP TABLE voiture;
 
-DROP TABLE ville;
 
 DROP TABLE etape;
+
+DROP TABLE inscription;
+
+DROP TABLE ville;
 
 DROP TABLE trajet;
 
 DROP TABLE avis;
 
-DROP TABLE inscription;
+DROP TABLE voiture;
+
+DROP TABLE etudiant;
 
 
 -- ============================================================
