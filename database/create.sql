@@ -7,19 +7,19 @@
 
 
 
-DROP TABLE etape;
+DROP TABLE IF EXISTS etape;
 
-DROP TABLE inscription;
+DROP TABLE IF EXISTS inscription;
 
-DROP TABLE ville;
+DROP TABLE IF EXISTS ville;
 
-DROP TABLE trajet;
+DROP TABLE IF EXISTS trajet;
 
-DROP TABLE avis;
+DROP TABLE IF EXISTS avis;
 
-DROP TABLE voiture;
+DROP TABLE IF EXISTS voiture;
 
-DROP TABLE etudiant;
+DROP TABLE IF EXISTS etudiant;
 
 
 -- ============================================================
