@@ -1,0 +1,6 @@
+FROM postgres:latest
+ENV POSTGRES_PASSWORD postgres
+ENV POSTGRES_DB covoiturage
+COPY ./create.sql /docker-entrypoint-initdb.d/create.sql
+COPY ./insert.sql /docker-entrypoint-initdb.d/insert.sql
+
