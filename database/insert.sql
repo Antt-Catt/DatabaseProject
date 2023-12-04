@@ -39,6 +39,7 @@ INSERT INTO voiture (type, couleur, nombre_de_places, etat, conducteur) VALUES
 --trajet
 INSERT INTO trajet (instant_depart, frais_par_passager, conducteur, id_voiture) VALUES 
 (TO_TIMESTAMP('13-OCT-1921-12-30-00', 'DD-MON-YYYY-HH-MI-SS'),30,1,1),
+(TO_TIMESTAMP('13-OCT-1921-12-30-00', 'DD-MON-YYYY-HH-MI-SS'),20,4,3),
 (TO_TIMESTAMP('11-JAN-1975-10-10-00', 'DD-MON-YYYY-HH-MI-SS'),5,4,2);
 
 
@@ -59,7 +60,8 @@ INSERT INTO etape (duree, distance, id_trajet, ville_depart, ville_arrivee) VALU
 (30, 35, 1, 1, 2),
 (400, 100, 2, 1, 4),
 (50, 35, 2, 4, 7),
-(350, 65, 2, 7, 3);
+(350, 65, 2, 7, 3),
+(100, 150, 3, 5, 6);
 
 
 
@@ -72,7 +74,8 @@ INSERT INTO inscription VALUES
 (2, 1),
 (5, 2),
 (6, 2),
-(7, 2);
+(7, 2),
+(3, 3);
 
 
 
