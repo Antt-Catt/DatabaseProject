@@ -3,11 +3,12 @@
 -- Liste des véhicules disponibles pour un jour donné pour une ville donnée
 SELECT vo.*
 FROM voiture vo
-INNER JOIN trajet t ON vo.conducteur = t.conducteur
+INNER JOIN trajet t ON vo.id_voiture = t.id_voiture
 INNER JOIN etape e ON t.id_trajet = e.id_trajet
 INNER JOIN ville vi ON e.ville_depart = vi.id_ville
-WHERE vi.nom_ville = 'Bordeaux'
+WHERE vi.nom_ville = 'BORDEAUX'
 AND DATE_TRUNC('day', t.instant_depart)::DATE = '1921-10-13'
+
 ;
 
 -- Les trajets proposés dans un intervalle de jours donné la liste des villes renseignées entre le campus et une ville donnée
@@ -19,7 +20,11 @@ JOIN etape et_dep ON t.id_trajet = et_dep.id_trajet
 JOIN etape et_arr ON t.id_trajet = et_arr.id_trajet
 JOIN ville v_dep ON et_dep.ville_depart = v_dep.id_ville
 JOIN ville v_arr ON et_arr.ville_arrivee = v_arr.id_ville
-WHERE (v_dep.nom_ville = 'Bordeaux')
-AND t.instant_depart >= '1921-10-10'::TIMESTAMP
-AND t.instant_depart <= '1921-10-20'::TIMESTAMP
+WHERE (v_dep.nom_ville = 'BORDEAUX')
+AND DATE_TRUNC('day', t.instant_depart)::DATE >= '1921-10-10'
+AND DATE_TRUNC('day', t.instant_depart)::DATE <= '1921-10-20'
 ;
+
+SELECT t.*
+FROM trajet t
+WHERE DATE_TRUNC('day', t.instant_depart)::DATE = '1921-10-13';
