@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 // Exécuter la requête
                 if ($stmt->execute()) {
-                    echo "Étudiant inséré avec succès.";
+                    header("Location: students.php");
                 } else {
                     echo "Erreur lors de l'insertion de l'étudiant.";
                 }
@@ -35,9 +35,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
-
-
-
-
-
-

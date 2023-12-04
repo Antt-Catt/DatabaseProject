@@ -13,27 +13,23 @@
         <?php include $_SERVER['DOCUMENT_ROOT'] . '/_nav.php'; ?>
     </header>
     <main>
-        <form method="GET" action="" id="filterForm">
-            <label for="filter">Filtrer par nom/prénom :</label>
-            <input type="text" id="filter" name="filter">
-            <input type="submit" value="Filtrer">
-            <br/>
-            <br/>
-            
-            <!-- <label for="ajouterNom">Nom : </label> -->
-            <!-- <input type="text" id="ajouterNom" name="ajouterNom"> -->
-            <!-- <label for="ajouterPrenom">Prénom : </label> -->
-            <!-- <input type="text" id="ajouterPrenom" name="Prénom"> -->
-            <!-- <input type="submit" value="AjouterNom"> -->
-            <!-- <input type="submit" value="ajouterPrenom"> -->
-        </form>
-        <form method="POST" action="insert_students.php" id="addStudentForm">
-                <label for="nom">Nom :</label>
-                <input type="text" id="nom" name="nom" required>
+        <label for="filter">Filtrer par nom/prénom :</label>
+        <input type="text" id="filter" name="filter">
+        <br />
 
-                <label for="prenom">Prénom :</label>
-                <input type="text" id="prenom" name="prenom" required>
-                <input type="submit" value="Ajouter étudiant">
+        <!-- <label for="ajouterNom">Nom : </label> -->
+        <!-- <input type="text" id="ajouterNom" name="ajouterNom"> -->
+        <!-- <label for="ajouterPrenom">Prénom : </label> -->
+        <!-- <input type="text" id="ajouterPrenom" name="Prénom"> -->
+        <!-- <input type="submit" value="AjouterNom"> -->
+        <!-- <input type="submit" value="ajouterPrenom"> -->
+        <form method="POST" action="insert_students.php" id="addStudentForm">
+            <label for="nom">Nom :</label>
+            <input type="text" id="nom" name="nom" required>
+
+            <label for="prenom">Prénom :</label>
+            <input type="text" id="prenom" name="prenom" required>
+            <input type="submit" value="Ajouter étudiant">
         </form>
         <form method="POST" action="remove_students.php" id="removeStudentForm">
             <label for="id_etudiant">ID de l'étudiant à supprimer :</label>
@@ -63,32 +59,11 @@
                 getStudents();
 
                 $('#filter').on('input', function() {
-                    var filterValue = $(this).val().toLowerCase();
-                    getStudents(filterValue);
+                    getStudents($(this).val().toLowerCase());
                 });
-
-
             });
-
-
-
-
-
-
-
-
-
-
         </script>
     </main>
 </body>
 
 </html>
-
-
-
-
-
-
-
-
