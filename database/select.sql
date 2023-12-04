@@ -24,7 +24,3 @@ WHERE (v_dep.nom_ville = 'BORDEAUX')
 AND DATE_TRUNC('day', t.instant_depart)::DATE >= '1921-10-10'
 AND DATE_TRUNC('day', t.instant_depart)::DATE <= '1921-10-20'
 ;
-
-SELECT t.*
-FROM trajet t
-WHERE DATE_TRUNC('day', t.instant_depart)::DATE = '1921-10-13';
