@@ -8,9 +8,6 @@ try {
         $filterCity = isset($_GET['filterCity']) ? $_GET['filterCity'] : '';
         $filterDate = isset($_GET['filterDate']) ? $_GET['filterDate'] : '';
 
-        var_dump($filterCity);
-        var_dump($filterDate);
-
         $query = "SELECT vo.*
                   FROM voiture vo
                   INNER JOIN trajet t ON vo.id_voiture = t.id_voiture
