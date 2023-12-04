@@ -41,3 +41,18 @@ WHERE (v_dep.nom_ville = 'BORDEAUX')
 AND DATE_TRUNC('day', t.instant_depart)::DATE >= '1921-10-10'
 AND DATE_TRUNC('day', t.instant_depart)::DATE <= '1921-10-20'
 ;
+
+-- Moyenne des passagers sur l’ensemble des trajets effectués
+SELECT AVG(nb_passagers) AS moyenne_passagers
+FROM (
+    SELECT t.id_trajet, COUNT(i.id_etudiant) AS nb_passagers
+    FROM trajet t
+    LEFT JOIN inscription i ON t.id_trajet = i.id_trajet
+    GROUP BY t.id_trajet
+) AS passagers_par_trajet;
+
+-- Moyenne des distances parcourues en covoiturage par jour
+SELECT AVG(e.distance) AS moyenne_distances_par_jour
+FROM trajet t
+JOIN etape e ON t.id_trajet = e.id_trajet
+GROUP BY DATE_TRUNC('day', t.instant_depart);
