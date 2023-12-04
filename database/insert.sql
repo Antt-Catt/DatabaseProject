@@ -69,10 +69,11 @@ INSERT INTO avis VALUES
 
 --inscription
 INSERT INTO inscription VALUES 
-(2, 1),
-(5, 2),
-(6, 2),
-(7, 2);
+(2, 1, NULL,TRUE),
+(5, 2, NULL, TRUE),
+(6, 2, NULL, TRUE),
+(7, 2, NULL, TRUE);
+
 
 
 

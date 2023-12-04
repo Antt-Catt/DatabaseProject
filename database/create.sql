@@ -110,6 +110,7 @@ CREATE TABLE inscription
     id_etudiant                     INTEGER                NOT NULL,
     id_trajet                       INTEGER                NOT NULL,
     id_ville                        INTEGER                ,
+    acceptation                     BOOLEAN                ,
         
     CONSTRAINT pk_inscription PRIMARY KEY (id_etudiant,id_trajet)
 );
