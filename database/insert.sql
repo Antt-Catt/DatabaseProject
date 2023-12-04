@@ -57,8 +57,8 @@ INSERT INTO ville (nom_ville) VALUES
 --etapes
 INSERT INTO etape (duree, distance, id_trajet, ville_depart, ville_arrivee) VALUES 
 (30, 35, 1, 1, 2),
-(400, 100, 2, 1, 3),
-(50, 35, 2, 1, 7),
+(400, 100, 2, 1, 4),
+(50, 35, 2, 4, 7),
 (350, 65, 2, 7, 3);
 
 
