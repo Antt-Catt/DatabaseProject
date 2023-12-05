@@ -52,10 +52,10 @@ FROM (
 ) AS passagers_par_trajet;
 
 -- Moyenne des distances parcourues en covoiturage par jour
-SELECT AVG(e.distance) AS moyenne_distances_par_jour
+SELECT DATE(t.instant_depart) AS jour, AVG(e.distance) AS moyenne_distances_par_jour
 FROM trajet t
 JOIN etape e ON t.id_trajet = e.id_trajet
-GROUP BY DATE_TRUNC('day', t.instant_depart);
+GROUP BY DATE(t.instant_depart);
 
 -- Classement des meilleurs conducteurs d’apres les avis
 SELECT e.nom_etudiant || ' ' || e.prenom_etudiant AS conducteur, AVG(a.note) AS moyenne_avis
@@ -67,7 +67,7 @@ GROUP BY e.id_etudiant
 ORDER BY moyenne_avis DESC;
 
 -- Classement des meilleurs passagers d’apres les avis
-SELECT e.nom_etudiant || ' ' || e.prenom_etudiant AS conducteur, AVG(a.note) AS moyenne_avis
+SELECT e.nom_etudiant || ' ' || e.prenom_etudiant AS passager, AVG(a.note) AS moyenne_avis
 FROM etudiant e
 JOIN inscription i ON e.id_etudiant = i.id_etudiant
 LEFT JOIN avis a ON i.id_trajet = a.id_trajet

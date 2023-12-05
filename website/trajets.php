@@ -15,13 +15,13 @@
     </header>
     <main>
         <div>
-            <label for="filterType">Filtrer par Type :</label>
-            <input type="text" id="filterType" name="filterType">
-            <!-- <br>
-            <label for="filterName">Filtrer par Nom :</label>
-            <input type="text" id="filterName" name="filterName"> -->
+            <label for="filterCity">Filtrer par ville :</label>
+            <input type="text" id="filterCity" name="filterCity">
+            <br>
+            <label for="filterDate">Filtrer par date :</label>
+            <input type="date" id="filterDate" name="filterDate">
         </div>
-        <form method="POST" action="insert_cars.php" id="addCarForm">
+        <!-- <form method="POST" action="insert_trajets.php" id="addCarForm">
             <label for="type">Type :</label>
             <input type="text" id="type" name="type" required>
 
@@ -38,36 +38,35 @@
             <input type="text" id="conducteur" name="conducteur" required>
 
             <input type="submit" value="Ajouter vehicule">
-        </form>
-        <form method="POST" action="remove_cars.php" id="removeCarForm">
-            <label for="id_voiture">ID de la voiture à supprimer :</label>
-            <input type="text" id="id_voiture" name="id_voiture" required>
-            <input type="submit" value="Supprimer voiture">
-        </form>
+        </form> -->
 
-        <div id="carsList"></div>
+        <div id="trajetsList"></div>
 
         <script>
             $(document).ready(function() {
-                function getCars(filterType = '') {
+                function getCars(filterCity = '', filterDate = '') {
                     $.ajax({
-                        url: 'get_cars.php',
+                        url: 'get_trajets.php',
                         method: 'GET',
                         data: {
-                            filterType: filterType
+                            filterCity: filterCity,
+                            filterDate: filterDate
                         },
                         success: function(response) {
-                            $('#carsList').html(response);
+                            $('#trajetsList').html(response);
                         }
                     });
                 }
 
                 getCars();
 
-                $('#filterType').on('input', function() {
-                    getCars($(this).val().toLowerCase(), $('#filterType').val());
+                $('#filterCity').on('input', function() {
+                    getCars($(this).val().toLowerCase(), $('#filterDate').val());
                 });
 
+                $('#filterDate').on('change', function() {
+                    getCars($('#filterCity').val().toLowerCase(), $(this).val());
+                });
             });
         </script>
     </main>
