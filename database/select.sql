@@ -1,4 +1,4 @@
--- Informations sur les conducteurs, passagers (pour un etudiant, on obtient les trajets auxquels il a participé, ceux qu'il a proposé)
+-- Informations sur les conducteurs, passagers (pour un etudiant, on obtient les trajets auxquels il a participe, ceux qu'il a proposé)
 
 SELECT 'Conducteur' AS role, DATE(t.instant_depart) as date_depart, vd.nom_ville AS ville_depart, va.nom_ville AS ville_arrivee, t.frais_par_passager
 FROM  trajet t
@@ -18,7 +18,7 @@ JOIN ville va ON e.ville_arrivee = va.id_ville
 WHERE i.id_etudiant = 1
 ;
 
--- Liste des véhicules disponibles pour un jour donné pour une ville donnée
+-- Liste des vehicules disponibles pour un jour donne pour une ville donnee
 SELECT vo.*
 FROM voiture vo
 INNER JOIN trajet t ON vo.id_voiture = t.id_voiture
@@ -28,7 +28,7 @@ WHERE vi.nom_ville = 'BORDEAUX'
 AND DATE_TRUNC('day', t.instant_depart)::DATE = '1921-10-13'
 ;
 
--- Les trajets proposés dans un intervalle de jours donné la liste des villes renseignées entre le campus et une ville donnée
+-- Les trajets proposes dans un intervalle de jours donne la liste des villes renseignees entre le campus et une ville donnee
 
 -- Les trajets pouvant desservir une ville donnée dans un intervalle de temps
 SELECT t.id_trajet, t.instant_depart, v_dep.nom_ville AS ville_depart, v_arr.nom_ville AS ville_arrivee
@@ -42,7 +42,7 @@ AND DATE_TRUNC('day', t.instant_depart)::DATE >= '1921-10-10'
 AND DATE_TRUNC('day', t.instant_depart)::DATE <= '1921-10-20'
 ;
 
--- Moyenne des passagers sur l’ensemble des trajets effectués
+-- Moyenne des passagers sur l’ensemble des trajets effectues
 SELECT AVG(nb_passagers) AS moyenne_passagers
 FROM (
     SELECT t.id_trajet, COUNT(i.id_etudiant) AS nb_passagers
@@ -56,3 +56,21 @@ SELECT AVG(e.distance) AS moyenne_distances_par_jour
 FROM trajet t
 JOIN etape e ON t.id_trajet = e.id_trajet
 GROUP BY DATE_TRUNC('day', t.instant_depart);
+
+-- Classement des meilleurs conducteurs d’apres les avis
+SELECT e.nom_etudiant || ' ' || e.prenom_etudiant AS conducteur, AVG(a.note) AS moyenne_avis
+FROM etudiant e
+JOIN trajet t ON e.id_etudiant = t.conducteur
+LEFT JOIN avis a ON t.id_trajet = a.id_trajet
+WHERE a.destinataire = e.id_etudiant
+GROUP BY e.id_etudiant
+ORDER BY moyenne_avis DESC;
+
+-- Classement des meilleurs passagers d’apres les avis
+SELECT e.nom_etudiant || ' ' || e.prenom_etudiant AS conducteur, AVG(a.note) AS moyenne_avis
+FROM etudiant e
+JOIN inscription i ON e.id_etudiant = i.id_etudiant
+LEFT JOIN avis a ON i.id_trajet = a.id_trajet
+WHERE a.destinataire = e.id_etudiant
+GROUP BY e.id_etudiant
+ORDER BY moyenne_avis DESC;
