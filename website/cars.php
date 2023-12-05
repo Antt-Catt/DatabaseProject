@@ -10,7 +10,8 @@
 
 <body>
     <header>
-        <?php include $_SERVER['DOCUMENT_ROOT'] . '/_nav.php'; ?>
+        <?php echo "cars";
+        include $_SERVER['DOCUMENT_ROOT'] . '/_nav.php'; ?>
     </header>
     <main>
         <div>
@@ -20,6 +21,26 @@
             <label for="filterDate">Filtrer par date :</label>
             <input type="date" id="filterDate" name="filterDate">
         </div>
+        <form method="POST" action="insert_cars.php" id="addCarForm">
+            <label for="type">Type :</label>
+            <input type="text" id="type" name="type" required>
+
+            <label for="couleur">Couleur :</label>
+            <input type="text" id="couleur" name="couleur" required>
+
+            <label for="ndp">Nombre de places :</label>
+            <input type="text" id="ndp" name="ndp" required>
+
+            <label for="etat">Etat :</label>
+            <input type="text" id="etat" name="etat" required>
+
+            <label for="conducteur">Id du conducteur :</label>
+            <input type="text" id="conducteur" name="conducteur" required>
+
+            <input type="submit" value="Ajouter vehicule">
+
+
+        </form>
 
         <div id="carsList"></div>
 
