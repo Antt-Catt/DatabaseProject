@@ -38,8 +38,11 @@
             <input type="text" id="conducteur" name="conducteur" required>
 
             <input type="submit" value="Ajouter vehicule">
-
-
+        </form>
+        <form method="POST" action="remove_cars.php" id="removeCarForm">
+            <label for="id_voiture">ID de la voiture à supprimer :</label>
+            <input type="text" id="id_voiture" name="id_voiture" required>
+            <input type="submit" value="Supprimer voiture">
         </form>
 
         <div id="carsList"></div>
