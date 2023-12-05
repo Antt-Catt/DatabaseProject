@@ -5,48 +5,49 @@ try {
     $conn = connectDB();
 
     if ($conn) {
-        $filterCity = isset($_GET['filterCity']) ? $_GET['filterCity'] : '';
-        $filterDate = isset($_GET['filterDate']) ? $_GET['filterDate'] : '';
 
-        $query = "SELECT vo.*, et.*, t.*, vi_arrivee.nom_ville AS nom_ville_arrivee, vi_depart.nom_ville AS nom_ville_depart
+        $filterType = isset($_GET['filterType']) ? $_GET['filterType'] : '';
+        // $filterName = isset($_GET['filterName']) ? $_GET['filterName'] : '';
+
+
+        $query = "SELECT vo.type, vo.couleur, et.nom_etudiant, et.prenom_etudiant
                   FROM voiture vo
-                  INNER JOIN trajet t ON vo.id_voiture = t.id_voiture
-                  INNER JOIN etape e ON t.id_trajet = e.id_trajet
-                  INNER JOIN ville vi_depart ON e.ville_depart = vi_depart.id_ville
-                  INNER JOIN ville vi_arrivee ON e.ville_arrivee = vi_arrivee.id_ville
                   INNER JOIN etudiant et ON vo.conducteur = et.id_etudiant
                   WHERE 1 = 1";
 
-        if (!empty($filterCity)) {
-            $query .= " AND LOWER(vi_depart.nom_ville) LIKE :city";
-        }
 
-        if (!empty($filterDate)) {
-            $formattedDate = date('Y-m-d', strtotime($filterDate));
-            $query .= " AND DATE_TRUNC('day', t.instant_depart)::DATE = :date";
-        }
+        if (!empty($filterType)) {
+            $query .= " AND LOWER(vo.type) LIKE :type";
+         }
+
+        //  if (!empty($filterName)) {
+        //     $query .= " AND LOWER(et.nom_etudiant) LIKE :nom";
+        // }
 
         $stmt = $conn->prepare($query);
 
-        if (!empty($filterCity)) {
-            $stmt->bindValue(':city', '%' . strtolower($filterCity) . '%');
-        }
+         if (!empty($filterType)) {
+             $stmt->bindValue(':type', '%' . strtolower($filterType) . '%');
+         }
 
-        if (!empty($filterDate)) {
-            $stmt->bindValue(':date', '%' . $formattedDate . '%');
-        }
+        //  if (!empty($filterName)) {
+        //      $stmt->bindValue(':nom', '%' . strtolower($filterName) . '%');
+
+        //  }
 
         $stmt->execute();
 
         if ($stmt->rowCount() > 0) {
-            $titles = ["Type", "Couleur", "Nom du conducteur", "Prénom du conducteur", "Instant du départ", "Frais par passager", "Ville de départ", "Ville d'arrivée"];
+            $titles = ["Type", "Couleur", "Nom du conducteur", "Prénom du conducteur"];
+
             echo "<tr>";
             foreach ($titles as $t) {
                 echo "<th>" . $t . "</th>";
             }
             echo "</tr>";
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                $elements = ["type", "couleur", "nom_etudiant", "prenom_etudiant", "instant_depart", "frais_par_passager", "nom_ville_depart", "nom_ville_arrivee"];
+                $elements = ["type", "couleur", "nom_etudiant", "prenom_etudiant"];
+
                 echo "<tr>";
                 foreach ($elements as $e) {
                     echo "<td>" . $row[$e] . "</td>";

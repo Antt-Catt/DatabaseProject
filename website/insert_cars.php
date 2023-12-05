@@ -29,14 +29,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $stmt->bindParam(':etat', $etat);
                 $stmt->bindParam(':conducteur', $conducteur);
 
-
                 // Exécuter la requête
                 if ($stmt->execute()) {
-                    header("Location: cars.php");
+                    echo "Le vehicule a été inséré";
+                    // header("Location: cars.php");
                 } else {
                     echo "Erreur lors de l'insertion du vehicule.";
                 }
-            } else {
+            } 
+            else {
                 echo "Veuillez fournir un type, une couleur, un nombre de places, un etat et un conducteur.";
             }
         }
