@@ -27,9 +27,9 @@ DROP TABLE IF EXISTS etudiant;
 -- ============================================================
 CREATE TABLE etudiant
 (
-    id_etudiant                     SERIAL                 NOT NULL,
-    nom_etudiant                    VARCHAR(20)            NOT NULL,
-    prenom_etudiant                 VARCHAR(20)                    ,
+    id_etudiant                     SERIAL                  NOT NULL,
+    nom_etudiant                    VARCHAR(20)             NOT NULL,
+    prenom_etudiant                 VARCHAR(20)             NOT NULL,
 
     CONSTRAINT pk_etudiant PRIMARY KEY (id_etudiant)
 );
@@ -40,9 +40,9 @@ CREATE TABLE etudiant
 CREATE TABLE avis
 (
     id_trajet                       INTEGER                 NOT NULL,
-    auteur INTEGER REFERENCES etudiant(id_etudiant),
-    destinataire INTEGER REFERENCES etudiant(id_etudiant),
-    note                            INTEGER                        ,
+    auteur INTEGER REFERENCES etudiant(id_etudiant)         NOT NULL,
+    destinataire INTEGER REFERENCES etudiant(id_etudiant)   NOT NULL,
+    note                            INTEGER                 NOT NULL,
     commentaire                     VARCHAR(20)                     ,
     CONSTRAINT pk_avis PRIMARY KEY (auteur,destinataire,id_trajet)
 );
@@ -53,12 +53,12 @@ CREATE TABLE avis
 -- ============================================================
 CREATE TABLE voiture
 (
-    id_voiture                      SERIAL                    NOT NULL,
-    type                            VARCHAR(20)                       ,
-    couleur                         VARCHAR(20)                       ,
-    nombre_de_places                INTEGER                           ,
-    etat                            VARCHAR(20)                       ,
-    conducteur INTEGER REFERENCES etudiant(id_etudiant),
+    id_voiture                      SERIAL                  NOT NULL,
+    type                            VARCHAR(20)             NOT NULL,
+    couleur                         VARCHAR(20)             NOT NULL,
+    nombre_de_places                INTEGER                 NOT NULL,
+    etat                            VARCHAR(20)             NOT NULL,
+    conducteur INTEGER REFERENCES etudiant(id_etudiant)     NOT NULL,
 
     CONSTRAINT pk_voiture PRIMARY KEY (id_voiture)
 );
@@ -68,8 +68,8 @@ CREATE TABLE voiture
 -- ============================================================
 CREATE TABLE ville
 (
-    id_ville                        SERIAL                 NOT NULL,
-    nom_ville                       VARCHAR(20)            NOT NULL,
+    id_ville                        SERIAL                  NOT NULL,
+    nom_ville                       VARCHAR(20)             NOT NULL,
     CONSTRAINT pk_ville PRIMARY KEY (id_ville)
 );
 
@@ -78,10 +78,10 @@ CREATE TABLE ville
 -- ============================================================
 CREATE TABLE etape
 (
-    id_etape                        SERIAL                 NOT NULL,
-    duree                           INTEGER                NOT NULL,
-    distance                        INTEGER                        ,
-    id_trajet                       INTEGER                NOT NULL,
+    id_etape                        SERIAL                  NOT NULL,
+    duree                           INTEGER                 NOT NULL,
+    distance                        INTEGER                 NOT NULL,
+    id_trajet                       INTEGER                 NOT NULL,
     ville_depart INTEGER REFERENCES ville(id_ville),
     ville_arrivee INTEGER REFERENCES ville(id_ville),
 
@@ -93,11 +93,11 @@ CREATE TABLE etape
 -- ============================================================
 CREATE TABLE trajet
 (
-    id_trajet                       SERIAL                 NOT NULL,
-    instant_depart                  TIMESTAMP                      ,
-    frais_par_passager              INTEGER                NOT NULL,
-    conducteur INTEGER REFERENCES etudiant(id_etudiant),
-    id_voiture                      INTEGER                NOT NULL,
+    id_trajet                       SERIAL                  NOT NULL,
+    instant_depart                  TIMESTAMP               NOT NULL,
+    frais_par_passager              INTEGER                 NOT NULL,
+    conducteur INTEGER REFERENCES etudiant(id_etudiant)     NOT NULL,
+    id_voiture                      INTEGER                 NOT NULL,
     
     CONSTRAINT pk_trajet PRIMARY KEY (id_trajet)
 );
@@ -107,10 +107,10 @@ CREATE TABLE trajet
 -- ============================================================
 CREATE TABLE inscription
 (
-    id_etudiant                     INTEGER                NOT NULL,
-    id_trajet                       INTEGER                NOT NULL,
-    id_ville                        INTEGER                ,
-    acceptation                     BOOLEAN                ,
+    id_etudiant                     INTEGER                 NOT NULL,
+    id_trajet                       INTEGER                 NOT NULL,
+    id_ville                        INTEGER                         ,
+    acceptation                     BOOLEAN                 NOT NULL,
         
     CONSTRAINT pk_inscription PRIMARY KEY (id_etudiant,id_trajet)
 );
