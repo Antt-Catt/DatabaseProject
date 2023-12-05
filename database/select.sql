@@ -74,3 +74,11 @@ LEFT JOIN avis a ON i.id_trajet = a.id_trajet
 WHERE a.destinataire = e.id_etudiant
 GROUP BY e.id_etudiant
 ORDER BY moyenne_avis DESC;
+
+-- Classement des villes selon le nombre de trajets qui les dessert
+SELECT v.nom_ville, COUNT(DISTINCT t.id_trajet) AS nombre_trajets
+FROM ville v
+JOIN etape e ON v.id_ville = e.ville_depart OR v.id_ville = e.ville_arrivee
+JOIN trajet t ON e.id_trajet = t.id_trajet
+GROUP BY v.nom_ville
+ORDER BY nombre_trajets DESC;
