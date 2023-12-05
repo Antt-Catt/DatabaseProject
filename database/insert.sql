@@ -38,9 +38,9 @@ INSERT INTO voiture (type, couleur, nombre_de_places, etat, conducteur) VALUES
 
 --trajet
 INSERT INTO trajet (instant_depart, frais_par_passager, conducteur, id_voiture) VALUES 
-(TO_TIMESTAMP('13-OCT-1921-12-30-00', 'DD-MON-YYYY-HH-MI-SS'),30,1,1),
-(TO_TIMESTAMP('13-OCT-1921-12-30-00', 'DD-MON-YYYY-HH-MI-SS'),20,4,3),
-(TO_TIMESTAMP('11-JAN-1975-10-10-00', 'DD-MON-YYYY-HH-MI-SS'),5,4,2);
+(TO_TIMESTAMP('13-OCT-1921-12-30-00', 'DD-MON-YYYY-HH-MI-SS'), 30, 1, 1),
+(TO_TIMESTAMP('13-OCT-1921-12-30-00', 'DD-MON-YYYY-HH-MI-SS'), 20, 4, 3),
+(TO_TIMESTAMP('11-JAN-1975-10-10-00', 'DD-MON-YYYY-HH-MI-SS'), 5, 4, 2);
 
 
 --ville
@@ -61,17 +61,24 @@ INSERT INTO etape (duree, distance, id_trajet, ville_depart, ville_arrivee) VALU
 (400, 100, 2, 1, 4),
 (50, 35, 2, 4, 7),
 (350, 65, 2, 7, 3),
-(100, 150, 3, 5, 6);
+(100, 150, 3, 5, 6),
+(101, 151, 3, 6, 1);
 
 
 
---avis
+
+--avis (id_trajet, auteur, destinataire, note, commentaire)
 INSERT INTO avis VALUES
-(1, 1, 2, 4, 'super');
+(1, 1, 2, 4, 'super'),
+(1, 2, 1, 5, NULL),
+(2, 5, 4, 4, NULL),
+(2, 6, 4, 1, NULL),
+(2, 7, 4, 0, NULL),
+(2, 4, 6, 0, NULL);
 
---inscription
+--inscription (id_etudiant, id_trajet, id_ville, acceptation)
 INSERT INTO inscription VALUES 
-(2, 1, NULL,TRUE),
+(2, 1, NULL, TRUE),
 (5, 2, NULL, TRUE),
 (6, 2, NULL, TRUE),
 (7, 2, NULL, TRUE);
