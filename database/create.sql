@@ -126,7 +126,7 @@ ALTER TABLE avis
 
 ALTER TABLE avis
     ADD CONSTRAINT fk3_avis FOREIGN KEY (id_trajet)
-       REFERENCES etudiant (id_etudiant);
+       REFERENCES trajet (id_trajet);
 
 ALTER TABLE trajet
     ADD CONSTRAINT fk1_trajet FOREIGN KEY (conducteur)
