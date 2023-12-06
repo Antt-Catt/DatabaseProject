@@ -44,7 +44,7 @@ CREATE TABLE avis
     destinataire INTEGER REFERENCES etudiant(id_etudiant)   NOT NULL,
     note                            INTEGER                 NOT NULL,
     commentaire                     VARCHAR(20)                     ,
-    CONSTRAINT pk_avis PRIMARY KEY (auteur,destinataire,id_trajet)
+    CONSTRAINT pk_avis PRIMARY KEY (auteur,destinataire,id_trajet),
     CONSTRAINT chk_auteur_destinataire_different CHECK (auteur <> destinataire)
 );
 
@@ -83,9 +83,9 @@ CREATE TABLE etape
     duree                           INTEGER                 NOT NULL,
     distance                        INTEGER                 NOT NULL,
     id_trajet                       INTEGER                 NOT NULL,
-    ville_depart INTEGER REFERENCES ville(id_ville)
-    ville_arrivee INTEGER REFERENCES ville(id_ville)
-    CONSTRAINT pk_etape PRIMARY KEY (id_etape)
+    ville_depart INTEGER REFERENCES ville(id_ville),
+    ville_arrivee INTEGER REFERENCES ville(id_ville),
+    CONSTRAINT pk_etape PRIMARY KEY (id_etape),
     CONSTRAINT chk_depart_arrivee_different CHECK (ville_depart <> ville_arrivee)
 );
 
