@@ -28,23 +28,42 @@ WHERE vi.nom_ville = 'BORDEAUX'
 AND DATE_TRUNC('day', t.instant_depart)::DATE = '1921-10-13'
 ;
 
--- Les trajets proposes dans un intervalle de jours donne la liste des villes renseignees entre le campus et une ville donnee
+-- Les trajets proposes dans un intervalle de jours donné
 SELECT t.*, e.ville_depart, e.ville_arrivee
 FROM trajet
 INNER JOIN etape e ON t.id_trajet = e.id_trajet
 WHERE t.instant_depart BETWEEN :date_debut AND :date_fin;
 
-SELECT e.ville_depart
+-- La liste des villes renseignees entre le campus et une ville donnee
+SELECT v.nom_ville AS liste_villes_intermediaires
 FROM (SELECT DISTINCT t.id_trajet AS id_trajet
 FROM trajet t
 INNER JOIN etape e1 ON t.id_trajet = e1.id_trajet
 INNER JOIN etape e2 ON t.id_trajet = e2.id_trajet
-WHERE e1.ville_depart = 'CAMPUS'
-AND e2.ville_arrivee = ':VILLE_DONNEE';)
-INNER JOIN etape e ON id_trajet = e.id_trajet
-WHERE e.ville_depart != 'CAMPUS';
+INNER JOIN ville v1 ON e1.ville_depart = v1.id_ville
+INNER JOIN ville v2 ON e2.ville_arrivee = v2.id_ville
+WHERE v1.nom_ville = 'BORDEAUX'
+AND v2.nom_ville = 'NANTES') i
+INNER JOIN etape e ON i.id_trajet = e.id_trajet
+INNER JOIN ville v ON e.ville_depart = v.id_ville
+WHERE v.nom_ville != 'BORDEAUX'
+AND v.nom_ville != 'NANTES'
 
+UNION
 
+SELECT v.nom_ville AS liste_villes_intermediaires
+FROM (SELECT DISTINCT t.id_trajet AS id_trajet
+FROM trajet t
+INNER JOIN etape e1 ON t.id_trajet = e1.id_trajet
+INNER JOIN etape e2 ON t.id_trajet = e2.id_trajet
+INNER JOIN ville v1 ON e1.ville_depart = v1.id_ville
+INNER JOIN ville v2 ON e2.ville_arrivee = v2.id_ville
+WHERE v2.nom_ville = 'BORDEAUX'
+AND v1.nom_ville = 'NANTES') i
+INNER JOIN etape e ON i.id_trajet = e.id_trajet
+INNER JOIN ville v ON e.ville_depart = v.id_ville
+WHERE v.nom_ville != 'BORDEAUX'
+AND v.nom_ville != 'NANTES';
 
 -- Les trajets pouvant desservir une ville donnée dans un intervalle de temps
 SELECT t.id_trajet, t.instant_depart, v_dep.nom_ville AS ville_depart, v_arr.nom_ville AS ville_arrivee
