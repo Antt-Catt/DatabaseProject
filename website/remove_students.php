@@ -6,19 +6,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $conn = connectDB();
 
         if ($conn) {
-            // Récupérer la valeur de l'ID de l'étudiant à supprimer
             $id_etudiant = isset($_POST['id_etudiant']) ? $_POST['id_etudiant'] : '';
 
-            // Vérifier si l'ID de l'étudiant n'est pas vide
             if (!empty($id_etudiant)) {
-                // Préparer la requête de suppression
                 $query = "DELETE FROM etudiant WHERE id_etudiant = :id_etudiant;";
                 $stmt = $conn->prepare($query);
 
-                // Lier le paramètre
                 $stmt->bindParam(':id_etudiant', $id_etudiant);
 
-                // Exécuter la requête
                 if ($stmt->execute()) {
                     header("Location: students.php");
                 } else {
