@@ -7,8 +7,7 @@ try {
     if ($conn) {
 
         $filterType = isset($_GET['filterType']) ? $_GET['filterType'] : '';
-        // $filterName = isset($_GET['filterName']) ? $_GET['filterName'] : '';
-
+        $filterName = isset($_GET['filterName']) ? $_GET['filterName'] : '';
 
         $query = "SELECT vo.type, vo.couleur, et.nom_etudiant, et.prenom_etudiant
                   FROM voiture vo
@@ -18,29 +17,28 @@ try {
 
         if (!empty($filterType)) {
             $query .= " AND LOWER(vo.type) LIKE :type";
-         }
+        }
 
-        //  if (!empty($filterName)) {
-        //     $query .= " AND LOWER(et.nom_etudiant) LIKE :nom";
-        // }
+        if (!empty($filterName)) {
+            $query .= " AND LOWER(et.nom_etudiant) LIKE :name OR LOWER(et.prenom_etudiant) LIKE :name";
+        }
 
         $stmt = $conn->prepare($query);
 
-         if (!empty($filterType)) {
-             $stmt->bindValue(':type', '%' . strtolower($filterType) . '%');
-         }
+        if (!empty($filterType)) {
+            $stmt->bindValue(':type', '%' . strtolower($filterType) . '%');
+        }
 
-        //  if (!empty($filterName)) {
-        //      $stmt->bindValue(':nom', '%' . strtolower($filterName) . '%');
-
-        //  }
+        if (!empty($filterName)) {
+            $stmt->bindValue(':name', '%' . strtolower($filterName) . '%');
+        }
 
         $stmt->execute();
 
         if ($stmt->rowCount() > 0) {
             $titles = ["Type", "Couleur", "Nom du conducteur", "Prénom du conducteur"];
 
-            echo "<tr>";
+            echo "<table><tr>";
             foreach ($titles as $t) {
                 echo "<th>" . $t . "</th>";
             }
