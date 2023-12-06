@@ -42,26 +42,29 @@
             <br>
             <input type="submit" value="Ajouter trajet">
         </form>
-        
+
         <div>
             <label for="filterCity">Filtrer par ville :</label>
             <input type="text" id="filterCity" name="filterCity">
             <br>
-            <label for="filterDate">Filtrer par date :</label>
-            <input type="date" id="filterDate" name="filterDate">
+            <label for="filterDate1">Du :</label>
+            <input type="date" id="filterDate1" name="filterDate1">
+            <label for="filterDate2">Au :</label>
+            <input type="date" id="filterDate2" name="filterDate2">
         </div>
 
         <div id="trajetsList"></div>
 
         <script>
             $(document).ready(function() {
-                function getTrajets(filterCity = '', filterDate = '') {
+                function getTrajets(filterCity = '', filterDate1 = '', filterDate2 = '') {
                     $.ajax({
                         url: 'get_trajets.php',
                         method: 'GET',
                         data: {
                             filterCity: filterCity,
-                            filterDate: filterDate
+                            filterDate1: filterDate1,
+                            filterDate2: filterDate2
                         },
                         success: function(response) {
                             $('#trajetsList').html(response);
@@ -72,14 +75,16 @@
                 getTrajets();
 
                 $('#filterCity').on('input', function() {
-                    getTrajets($(this).val().toLowerCase(), $('#filterDate').val());
+                    getTrajets($(this).val().toLowerCase(), $('#filterDate1').val(), $('#filterDate2').val());
                 });
 
-                $('#filterDate').on('change', function() {
-                    getTrajets($('#filterCity').val().toLowerCase(), $(this).val());
+                $('#filterDate1').on('change', function() {
+                    getTrajets($('#filterCity').val().toLowerCase(), $(this).val(), $('#filterDate2').val());
                 });
 
-        
+                $('#filterDate2').on('change', function() {
+                    getTrajets($('#filterCity').val().toLowerCase(), $('#filterDate1').val(), $(this).val());
+                });
             });
         </script>
     </main>

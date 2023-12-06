@@ -6,7 +6,8 @@ try {
 
     if ($conn) {
         $filterCity = isset($_GET['filterCity']) ? $_GET['filterCity'] : '';
-        $filterDate = isset($_GET['filterDate']) ? $_GET['filterDate'] : '';
+        $filterDate1 = isset($_GET['filterDate1']) ? $_GET['filterDate1'] : '';
+        $filterDate2 = isset($_GET['filterDate2']) ? $_GET['filterDate2'] : '';
 
         $query = "SELECT t.id_trajet, vo.type, et.nom_etudiant, et.prenom_etudiant, t.frais_par_passager, t.instant_depart, vi_depart.nom_ville AS nom_ville_depart, vi_arrivee.nom_ville AS nom_ville_arrivee, e.duree
                   FROM voiture vo
@@ -17,14 +18,18 @@ try {
                   INNER JOIN etudiant et ON vo.conducteur = et.id_etudiant
                   WHERE 1 = 1";
 
-
         if (!empty($filterCity)) {
             $query .= " AND (LOWER(vi_depart.nom_ville) LIKE :city OR LOWER(vi_arrivee.nom_ville) LIKE :city)";
         }
 
-        if (!empty($filterDate)) {
-            $formattedDate = date('Y-m-d', strtotime($filterDate));
-            $query .= " AND DATE_TRUNC('day', t.instant_depart)::DATE = :date";
+        if (!empty($filterDate1)) {
+            $formattedDate1 = date('Y-m-d', strtotime($filterDate1));
+            $query .= " AND DATE_TRUNC('day', t.instant_depart)::DATE > :date1";
+        }
+
+        if (!empty($filterDate2)) {
+            $formattedDate2 = date('Y-m-d', strtotime($filterDate2));
+            $query .= " AND DATE_TRUNC('day', t.instant_depart)::DATE < :date2";
         }
 
         $stmt = $conn->prepare($query);
@@ -33,8 +38,12 @@ try {
             $stmt->bindValue(':city', '%' . strtolower($filterCity) . '%');
         }
 
-        if (!empty($filterDate)) {
-            $stmt->bindValue(':date', '%' . $formattedDate . '%');
+        if (!empty($filterDate1)) {
+            $stmt->bindValue(':date1', '%' . $formattedDate1 . '%');
+        }
+
+        if (!empty($filterDate2)) {
+            $stmt->bindValue(':date2', '%' . $formattedDate2 . '%');
         }
 
         $stmt->execute();
