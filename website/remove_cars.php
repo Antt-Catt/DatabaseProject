@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 // Exécuter la requête
                 if ($stmt->execute()) {
-                    echo "Voiture supprimée avec succès.";
+                    header("Location: cars.php");
                 } else {
                     echo "Erreur lors de la suppression de la voiture.";
                 }
@@ -32,4 +32,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Erreur de connexion : " . $e->getMessage();
     }
 }
-?>

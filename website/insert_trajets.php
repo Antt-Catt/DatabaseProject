@@ -1,7 +1,8 @@
 <?php
 require_once 'db_connection.php';
 
-function getVilleId($conn, $nom_ville) {
+function getVilleId($conn, $nom_ville)
+{
     // Recherche l'ID de la ville dans la table
     $query = "SELECT id_ville FROM ville WHERE nom_ville = :nom_ville;";
     $stmt = $conn->prepare($query);
@@ -24,7 +25,6 @@ function getVilleId($conn, $nom_ville) {
     }
 }
 
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     try {
         $conn = connectDB();
@@ -42,19 +42,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $ville_depart = isset($_POST['ville_depart']) ? $_POST['ville_depart'] : '';
             $ville_arrivee = isset($_POST['ville_arrivee']) ? $_POST['ville_arrivee'] : '';
 
-
-
             // Vérifier si les valeurs sont non vides
             if (!empty($instant_depart) && !empty($frais_par_passager) && !empty($conducteur) && !empty($id_voiture) && !empty($duree) && !empty($distance) && !empty($ville_depart) && !empty($ville_arrivee)) {
-                
+
                 $conn->beginTransaction();
 
-                try{
+                try {
 
                     // Obtient les IDs des villes de départ et d'arrivée
                     $id_ville_depart = getVilleId($conn, $ville_depart);
                     $id_ville_arrivee = getVilleId($conn, $ville_arrivee);
-
 
                     // Préparer la requête d'insertion
                     $query_trajet = "INSERT INTO trajet (instant_depart, frais_par_passager, conducteur, id_voiture) VALUES (:instant_depart, :frais_par_passager, :conducteur, :id_voiture);";
@@ -66,18 +63,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $stmt_trajet->bindParam(':conducteur', $conducteur);
                     $stmt_trajet->bindParam(':id_voiture', $id_voiture);
 
-                     // Exécuter la requête pour le trajet
-                     $stmt_trajet->execute();
+                    // Exécuter la requête pour le trajet
+                    $stmt_trajet->execute();
 
-                     // Récupérer l'id_trajet généré
+                    // Récupérer l'id_trajet généré
                     $id_trajet = $conn->lastInsertId();
-
 
                     // Préparer la requête d'insertion pour l'étape
                     $query_etape = "INSERT INTO etape (duree, distance, id_trajet, ville_depart, ville_arrivee) VALUES (:duree, :distance, :id_trajet, :ville_depart, :ville_arrivee)";
                     $stmt_etape = $conn->prepare($query_etape);
 
-        
                     // Liens des paramètres pour l'étape
                     $stmt_etape->bindParam(':duree', $duree);
                     $stmt_etape->bindParam(':distance', $distance);
@@ -91,19 +86,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     // Valider la transaction
                     $conn->commit();
 
-                echo "Le trajet et l'étape ont été insérés avec succès";
-            } catch (PDOException $e) {
-                // En cas d'erreur, annuler la transaction
-                $conn->rollBack();
-                echo "Erreur lors de l'insertion du trajet et de l'étape: " . $e->getMessage();
+                    header("Location: trajets.php");
+                } catch (PDOException $e) {
+                    // En cas d'erreur, annuler la transaction
+                    $conn->rollBack();
+                    echo "Erreur lors de l'insertion du trajet et de l'étape: " . $e->getMessage();
+                }
+            } else {
+                echo "Veuillez fournir toutes les informations nécessaires pour le trajet et l'étape.";
             }
-        } else {
-            echo "Veuillez fournir toutes les informations nécessaires pour le trajet et l'étape.";
         }
-        }
-                
     } catch (PDOException $e) {
         echo "Erreur de connexion : " . $e->getMessage();
     }
 }
-?>

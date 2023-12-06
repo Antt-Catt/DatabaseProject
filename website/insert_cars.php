@@ -31,8 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 // Exécuter la requête
                 if ($stmt->execute()) {
-                    echo "Le vehicule a été inséré";
-                    // header("Location: cars.php");
+                    header("Location: cars.php");
                 } else {
                     echo "Erreur lors de l'insertion du vehicule.";
                 }
