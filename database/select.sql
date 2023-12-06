@@ -29,6 +29,22 @@ AND DATE_TRUNC('day', t.instant_depart)::DATE = '1921-10-13'
 ;
 
 -- Les trajets proposes dans un intervalle de jours donne la liste des villes renseignees entre le campus et une ville donnee
+SELECT t.*, e.ville_depart, e.ville_arrivee
+FROM trajet
+INNER JOIN etape e ON t.id_trajet = e.id_trajet
+WHERE t.instant_depart BETWEEN :date_debut AND :date_fin;
+
+SELECT e.ville_depart
+FROM (SELECT DISTINCT t.id_trajet AS id_trajet
+FROM trajet t
+INNER JOIN etape e1 ON t.id_trajet = e1.id_trajet
+INNER JOIN etape e2 ON t.id_trajet = e2.id_trajet
+WHERE e1.ville_depart = 'CAMPUS'
+AND e2.ville_arrivee = ':VILLE_DONNEE';)
+INNER JOIN etape e ON id_trajet = e.id_trajet
+WHERE e.ville_depart != 'CAMPUS';
+
+
 
 -- Les trajets pouvant desservir une ville donnée dans un intervalle de temps
 SELECT t.id_trajet, t.instant_depart, v_dep.nom_ville AS ville_depart, v_arr.nom_ville AS ville_arrivee
@@ -82,3 +98,32 @@ JOIN etape e ON v.id_ville = e.ville_depart OR v.id_ville = e.ville_arrivee
 JOIN trajet t ON e.id_trajet = t.id_trajet
 GROUP BY v.nom_ville
 ORDER BY nombre_trajets DESC;
+
+-- Avis renseignés par un étudiant (auteur) à un autre (destinataire) pour un trajet partagé
+SELECT a.*, CONCAT(au.nom_etudiant, ' ', au.prenom_etudiant) as auteur, CONCAT(de.nom_etudiant, ' ', de.prenom_etudiant) as destinataire
+                  FROM avis a
+                  INNER JOIN etudiant au ON a.auteur = au.id_etudiant
+                  INNER JOIN etudiant de ON a.destinataire = de.id_etudiant
+                  WHERE 1=1;
+
+-- Selection des type, couleur, nom et prénom du conducteur des voitures
+SELECT vo.type, vo.couleur, et.nom_etudiant, et.prenom_etudiant
+                  FROM voiture vo
+                  INNER JOIN etudiant et ON vo.conducteur = et.id_etudiant
+                  WHERE 1 = 1;
+
+-- Selectionne le nom et prénom d'un étudiant à partir d'une recherche sur son nom et prénom
+SELECT * FROM etudiant WHERE LOWER(nom_etudiant) LIKE '%$filter%' OR LOWER(prenom_etudiant) LIKE '%$filter%';
+
+-- Selectionne pour chaque trajet le type le nom et prénom du conducteur, les frais par passager pour le trajet, la date et l'heure du départ, les ville de départ et d'arrivée et la durée du trajet
+SELECT vo.type, et.nom_etudiant, et.prenom_etudiant, t.frais_par_passager, t.instant_depart, vi_depart.nom_ville AS nom_ville_depart, vi_arrivee.nom_ville AS nom_ville_arrivee, e.duree
+                  FROM voiture vo
+                  INNER JOIN trajet t ON vo.id_voiture = t.id_voiture
+                  INNER JOIN etape e ON t.id_trajet = e.id_trajet
+                  INNER JOIN ville vi_depart ON e.ville_depart = vi_depart.id_ville
+                  INNER JOIN ville vi_arrivee ON e.ville_arrivee = vi_arrivee.id_ville
+                  INNER JOIN etudiant et ON vo.conducteur = et.id_etudiant
+                  WHERE 1 = 1;
+
+-- Selectionne dans la table ville, la ville si elle existe que l'utilisateur aura renseigné dans un formulaire
+SELECT id_ville FROM ville WHERE nom_ville = :nom_ville;
