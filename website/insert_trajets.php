@@ -3,7 +3,7 @@ require_once 'db_connection.php';
 
 function getVilleId($conn, $nom_ville) {
     // Recherche l'ID de la ville dans la table
-    $query = "SELECT id_ville FROM ville WHERE nom_ville = :nom_ville";
+    $query = "SELECT id_ville FROM ville WHERE nom_ville = :nom_ville;";
     $stmt = $conn->prepare($query);
     $stmt->bindParam(':nom_ville', $nom_ville);
     $stmt->execute();
@@ -14,7 +14,7 @@ function getVilleId($conn, $nom_ville) {
     if ($row) {
         return $row['id_ville'];
     } else {
-        $query_insert = "INSERT INTO ville (nom_ville) VALUES (:nom_ville)";
+        $query_insert = "INSERT INTO ville (nom_ville) VALUES (:nom_ville);";
         $stmt_insert = $conn->prepare($query_insert);
         $stmt_insert->bindParam(':nom_ville', $nom_ville);
         $stmt_insert->execute();
@@ -83,7 +83,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $stmt_etape->bindParam(':distance', $distance);
                     $stmt_etape->bindParam(':id_trajet', $id_trajet);
                     $stmt_etape->bindParam(':ville_depart', $id_ville_depart);
-                    $stmt_etape->bindParam(':ville_arrivee', $_d_ville_arrivee);
+                    $stmt_etape->bindParam(':ville_arrivee', $id_ville_arrivee);
 
                     // Exécuter la requête pour l'étape
                     $stmt_etape->execute();

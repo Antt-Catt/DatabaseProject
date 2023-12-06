@@ -19,11 +19,11 @@
             <input type="text" id="filterCity" name="filterCity">
             <br>
             <label for="filterDate">Filtrer par date :</label>
-            <input type="text" id="filterDate" name="filterDate">
+            <input type="date" id="filterDate" name="filterDate">
         </div>
         <form method="POST" action="insert_trajets.php" id="addTrajetForm">
             <label for="instant_depart"> Instant depart :</label>
-            <input type="date" id="type" name="instant_depart" required>
+            <input type="datetime-local" id="type" name="instant_depart" required>
 
             <label for="frais_par_passager">Frais par passager :</label>
             <input type="text" id="frais_par_passager" name="frais_par_passager" required>
@@ -78,6 +78,8 @@
                 $('#filterDate').on('change', function() {
                     getTrajets($('#filterCity').val().toLowerCase(), $(this).val());
                 });
+
+        
             });
         </script>
     </main>

@@ -8,7 +8,8 @@ try {
         $filterCity = isset($_GET['filterCity']) ? $_GET['filterCity'] : '';
         $filterDate = isset($_GET['filterDate']) ? $_GET['filterDate'] : '';
 
-        $query = "SELECT vo.*, et.*, t.*, vi_arrivee.nom_ville AS nom_ville_arrivee, vi_depart.nom_ville AS nom_ville_depart
+        $query = "SELECT vo.type, et.nom_etudiant, et.prenom_etudiant, t.frais_par_passager, t.instant_depart, vi_depart.nom_ville AS nom_ville_depart, vi_arrivee.nom_ville AS nom_ville_arrivee, e.duree
+        
                   FROM voiture vo
                   INNER JOIN trajet t ON vo.id_voiture = t.id_voiture
                   INNER JOIN etape e ON t.id_trajet = e.id_trajet
@@ -40,7 +41,7 @@ try {
         $stmt->execute();
 
         if ($stmt->rowCount() > 0) {
-            $titles = ["Type", "Couleur", "Nom du conducteur", "Prénom du conducteur", "Instant du départ", "Frais par passager", "Ville de départ", "Ville d'arrivée"];
+            $titles = ["Type", "Nom du conducteur", "Prénom du conducteur", "Frais par passager", "Instant du départ", "Ville de départ", "Ville d'arrivée", "Duree"];
 
             echo "<tr>";
             foreach ($titles as $t) {
@@ -48,8 +49,7 @@ try {
             }
             echo "</tr>";
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                $elements = ["type", "couleur", "nom_etudiant", "prenom_etudiant", "instant_depart", "frais_par_passager", "nom_ville_depart", "nom_ville_arrivee"];
-                // $elements = ["type", "couleur", "nom_etudiant", "prenom_etudiant"];
+                $elements = ["type", "nom_etudiant", "prenom_etudiant", "frais_par_passager", "instant_depart", "nom_ville_depart", "nom_ville_arrivee", "duree"];
 
                 echo "<tr>";
                 foreach ($elements as $e) {
