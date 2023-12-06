@@ -32,6 +32,17 @@
             <input type="submit" value="Supprimer étudiant">
         </form>
         
+        <h3>Rôle par étudiant</h3>
+        
+        <div>
+            <label for="id_student">Indentifiant de l'étudiant (Pour informations détaillés) :</label>
+            <input type="text" id="id_student" name="id_student">
+        </div>
+        
+        <div id="studentInfos"></div>
+        
+        <h3>Liste des étudiants</h3>
+
         <div>
             <label for="filter">Filtrer par nom/prénom :</label>
             <input type="text" id="filter" name="filter">
@@ -53,11 +64,28 @@
                         }
                     });
                 }
+                
+                function getInfosStudents(id_student = '') {
+                    $.ajax({
+                        url: 'get_infos_students.php',
+                        method: 'GET',
+                        data: {
+                            id_student: id_student
+                        },
+                        success: function(response) {
+                            $('#studentInfos').html(response);
+                        }
+                    });
+                }
 
                 getStudents();
 
                 $('#filter').on('input', function() {
                     getStudents($(this).val().toLowerCase());
+                });
+
+                $('#id_student').on('input', function() {
+                    getInfosStudents($(this).val());
                 });
             });
         </script>
