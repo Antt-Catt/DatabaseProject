@@ -33,9 +33,14 @@ Lancer un conteneurs après un arrêt :
 sudo docker start <CONTAINER_ID>
 ```
 
+Redémarrer un conteneur :
+```bash
+sudo docker restart <CONTAINER_ID>
+```
+
 ## Suppression
 
-Supprimer les conteneurs :
+Supprimer un conteneur :
 ```bash
 sudo docker rm <CONTAINER ID>
 ```
@@ -45,7 +50,7 @@ Lister les images :
 sudo docker images
 ```
 
-Suprimer les images :
+Supprimer une image :
 ```bash
 sudo docker rim <IMAGE_ID>
 ```
