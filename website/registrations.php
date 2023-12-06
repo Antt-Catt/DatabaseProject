@@ -14,7 +14,7 @@
         <?php
         include $_SERVER['DOCUMENT_ROOT'] . '/_nav.php'; ?>
     </header>
-    <main>        
+    <main>
         <form method="POST" action="insert_registrations.php">
             <label for="id_etudiant">Identifiant de l'étudiant :</label>
             <input type="text" id="id_etudiant" name="id_etudiant" required>
@@ -26,6 +26,19 @@
             <input type="text" id="ville" name="ville" required>
             <br>
             <input type="submit" value="Ajouter une inscription">
+        </form>
+
+        <form method="POST" action="accept_registrations.php">
+            <label for="id_etudiant">Identifiant de l'étudiant :</label>
+            <input type="text" id="id_etudiant" name="id_etudiant" required>
+            <br>
+            <label for="id_trajet">Identifiant du trajet :</label>
+            <input type="text" id="id_trajet" name="id_trajet" required>
+            <br>
+            <label for="ville">Ville de l'étudiant :</label>
+            <input type="text" id="ville" name="ville" required>
+            <br>
+            <input type="submit" value="Accepter une inscription">
         </form>
 
         <div>
