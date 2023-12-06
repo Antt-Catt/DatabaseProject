@@ -1,43 +1,30 @@
 --Commandes de mise à jour des tables
 
+--AVIS
+--ajoute un nouvel avis dans la table avis correspondante - les champs sont remplis à partir d'un formulaire rempli par l'utilisateur
+INSERT INTO avis (id_trajet, auteur, destinataire, note, commentaire) VALUES (:id_trajet, :auteur, :destinataire, :note, :commentaire);
 
---Etudiants
-----Ajout d'un étudiant:
-INSERT INTO etudiant (nom_etudiant, prenom_etudiant)
-VALUES (nom, prenom);
+--ETAPES
+--ajoute une nouvelle étape dans la table etape correspondante - les champs sont remplis à partir d'un formulaire rempli par l'utilisateur
+INSERT INTO etape (duree, distance, id_trajet, ville_depart, ville_arrivee) VALUES (:duree, :distance, :id_trajet, :ville_depart, :ville_arrivee);
 
-----Suppresion étudiant:
-DELETE FROM etudiant WHERE id_etudiant = id_etudiant;
+--STUDENTS
+--ajoute un nouvel étudiant dans la table etudiant correspondante - les champs sont remplis à partir d'un formulaire rempli par l'utilisateur
+INSERT INTO etudiant (nom_etudiant, prenom_etudiant) VALUES (:nom, :prenom);
+--supprime un etudiant de la table etudiant à partir de son identifiant (renseigné par l'utilisateur dans un formulaire)
+DELETE FROM etudiant WHERE id_etudiant = :id_etudiant;
 
+--TRAJETS
+--ajoute un nouveau trajet dans la table trajet correspondante - les champs sont remplis à partir d'un formulaire rempli par l'utilisateur
+INSERT INTO trajet (instant_depart, frais_par_passager, conducteur, id_voiture) VALUES (:instant_depart, :frais_par_passager, :conducteur, :id_voiture);
 
--- Trajets/Etapes
+--VILLES
+--ajoute à la table ville une nouvelle ville - le champ de la table est rempli à partir d'un formulaire rempli par l'utilisateur
+INSERT INTO ville (nom_ville) VALUES (:nom_ville);
 
-----Ajout d'un trajet d'une ville A vers une ville B à un instant donné (le trajet peut présenté plusieurs étapes)
---ville arrivée
-INSERT INTO ville (nom_ville) VALUES ('VILLE_ARRIVÉE');
---ville départ
-INSERT INTO ville (nom_ville) VALUES ('VILLE_DÉPART');
---ajout d'un trajet
-INSERT INTO trajet (instant_depart, frais_par_passager, conducteur, id_voiture) VALUES ((TO_TIMESTAMP('13-OCT-2006-12-30-00', 'DD-MON-YYYY-HH-MI-SS'), frais, conducteur, id_voiture));
---ajout de une ou plusieurs étapes
-INSERT INTO etape (duree, distance, id_trajet, ville_depart, ville_arrivee) VALUES (duree (min), distance(km), id_trajet, ville_depart, ville_arrivee);
+--VOITURES
+--ajoute une nouvelle voiture dans la table voiture correspondante - les champs sont remplis à partir d'un formulaire rempli par l'utilisateur
+INSERT INTO voiture (type, couleur, nombre_de_places, etat, conducteur) VALUES (:type, :couleur, :ndp, :etat, :conducteur);
+--supprime une voiture de la table voiture à partir de son identifiant (renseigné par l'utilisateur dans un formulaire)
+DELETE FROM voiture WHERE id_voiture = :id_voiture;
 
-
-
---Inscription d'un passager à un trajet
-
----- Mise à jour de l'horaire
-UPDATE trajet
-SET instant_depart = ;
-
-
-
-
-
--- Voitures
-
--- Mise à jour du nombre_de_places :
-UPDATE 
-
-
-//
