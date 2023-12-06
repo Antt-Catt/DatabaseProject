@@ -24,7 +24,6 @@ INSERT INTO etudiant (nom_etudiant, prenom_etudiant) VALUES
 ('TRUFFAUT'   , 'FRANCOIS'       ),
 ('COCTEAU'    , 'JEAN'           );
 
-
 --voiture
 INSERT INTO voiture (type, couleur, nombre_de_places, etat, conducteur) VALUES 
 ('CHARETTE', 'VERT', 5, 'NEUF', 1),
@@ -34,14 +33,11 @@ INSERT INTO voiture (type, couleur, nombre_de_places, etat, conducteur) VALUES
 ('4X4', 'NOIR', 5, 'NEUF', 4),
 ('ELECTRIQUE', 'BLANC', 3, 'VIEUX', 5);
 
-
-
 --trajet
 INSERT INTO trajet (instant_depart, frais_par_passager, conducteur, id_voiture) VALUES 
 (TO_TIMESTAMP('13-OCT-1921-12-30-00', 'DD-MON-YYYY-HH-MI-SS'), 30, 1, 1),
 (TO_TIMESTAMP('13-OCT-1921-12-30-00', 'DD-MON-YYYY-HH-MI-SS'), 20, 4, 3),
 (TO_TIMESTAMP('11-JAN-1975-10-10-00', 'DD-MON-YYYY-HH-MI-SS'), 5, 4, 2);
-
 
 --ville
 INSERT INTO ville (nom_ville) VALUES 
@@ -64,9 +60,6 @@ INSERT INTO etape (duree, distance, id_trajet, ville_depart, ville_arrivee) VALU
 (100, 150, 3, 5, 6),
 (101, 151, 3, 6, 1);
 
-
-
-
 --avis (id_trajet, auteur, destinataire, note, commentaire)
 INSERT INTO avis VALUES
 (1, 1, 2, 4, 'super'),
@@ -78,13 +71,10 @@ INSERT INTO avis VALUES
 
 --inscription (id_etudiant, id_trajet, id_ville, acceptation)
 INSERT INTO inscription VALUES 
-(2, 1, NULL, TRUE),
-(5, 2, NULL, TRUE),
-(6, 2, NULL, TRUE),
-(7, 2, NULL, TRUE);
-
-
-
+(2, 1, 1, TRUE),
+(5, 2, 2, TRUE),
+(6, 2, 3, TRUE),
+(7, 2, 8, TRUE);
 
 -- INSERT INTO voiture () VALUES 
 -- INSERT INTO voiture () VALUES 
