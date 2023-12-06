@@ -1,12 +1,12 @@
-DROP TABLE etape;
+DROP TABLE avis;
 
 DROP TABLE inscription;
 
-DROP TABLE ville;
+DROP TABLE etape;
 
 DROP TABLE trajet;
 
-DROP TABLE avis;
+DROP TABLE ville;
 
 DROP TABLE voiture;
 
