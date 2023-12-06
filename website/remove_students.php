@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 // Exécuter la requête
                 if ($stmt->execute()) {
-                    echo "Étudiant supprimé avec succès.";
+                    header("Location: students.php");
                 } else {
                     echo "Erreur lors de la suppression de l'étudiant.";
                 }

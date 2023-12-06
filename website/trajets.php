@@ -42,7 +42,7 @@
             <br>
             <input type="submit" value="Ajouter trajet">
         </form>
-
+        
         <div>
             <label for="filterCity">Filtrer par ville :</label>
             <input type="text" id="filterCity" name="filterCity">

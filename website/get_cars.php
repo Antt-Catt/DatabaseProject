@@ -9,7 +9,7 @@ try {
         $filterType = isset($_GET['filterType']) ? $_GET['filterType'] : '';
         $filterName = isset($_GET['filterName']) ? $_GET['filterName'] : '';
 
-        $query = "SELECT vo.type, vo.couleur, et.nom_etudiant, et.prenom_etudiant
+        $query = "SELECT vo.id_voiture, vo.type, vo.couleur, et.nom_etudiant, et.prenom_etudiant
                   FROM voiture vo
                   INNER JOIN etudiant et ON vo.conducteur = et.id_etudiant
                   WHERE 1 = 1";
@@ -36,15 +36,14 @@ try {
         $stmt->execute();
 
         if ($stmt->rowCount() > 0) {
-            $titles = ["Type", "Couleur", "Nom du conducteur", "Prénom du conducteur"];
 
             echo "<table><tr>";
-            foreach ($titles as $t) {
+            foreach (["Identifiant", "Type", "Couleur", "Nom du conducteur", "Prénom du conducteur"] as $t) {
                 echo "<th>" . $t . "</th>";
             }
             echo "</tr>";
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                $elements = ["type", "couleur", "nom_etudiant", "prenom_etudiant"];
+                $elements = ["id_voiture", "type", "couleur", "nom_etudiant", "prenom_etudiant"];
 
                 echo "<tr>";
                 foreach ($elements as $e) {
