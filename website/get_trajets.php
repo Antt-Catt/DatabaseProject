@@ -19,7 +19,7 @@ try {
 
 
         if (!empty($filterCity)) {
-            $query .= " AND LOWER(vi_depart.nom_ville) LIKE :city OR LOWER(vi_arrivee.nom_ville) LIKE :city";
+            $query .= " AND (LOWER(vi_depart.nom_ville) LIKE :city OR LOWER(vi_arrivee.nom_ville) LIKE :city)";
         }
 
         if (!empty($filterDate)) {

@@ -20,7 +20,7 @@ try {
         }
 
         if (!empty($filterName)) {
-            $query .= " AND LOWER(et.nom_etudiant) LIKE :name OR LOWER(et.prenom_etudiant) LIKE :name";
+            $query .= " AND (LOWER(et.nom_etudiant) LIKE :name OR LOWER(et.prenom_etudiant) LIKE :name)";
         }
 
         $stmt = $conn->prepare($query);
